@@ -1,7 +1,12 @@
 'use client';
 
-import { Button, Checkbox, Flex, Form, Input, Typography } from 'antd';
+import { App, Button, Checkbox, Flex, Form, Input, Typography } from 'antd';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useContext } from 'react';
+
+import { UsersContext } from '@/src/app/store/users-provider';
+import { User } from '@/src/shared/models';
 
 import { FormModel } from './types';
 
@@ -38,8 +43,29 @@ const tailFormItemLayout = {
 };
 
 export const SignupForm = () => {
+  const usersStore = useContext(UsersContext);
+  const { notification } = App.useApp();
+  const router = useRouter();
+
   const handleSubmit = (values: FormModel) => {
-    console.log('Received values of form: ', values);
+    if (usersStore?.getUser(values.email)) {
+      notification?.error({
+        message: 'Ошибка регистрации',
+        description: 'Пользователь с таким email уже существует',
+      });
+      return;
+    }
+
+    const user: User = {
+      ...values,
+    };
+    usersStore?.addUser(user);
+    usersStore?.setCurrentUser(user);
+    notification?.success({
+      message: 'Вы успешно зарегистрировались!',
+      description: 'Переходим на главную страницу',
+    });
+    router.push('/');
   };
 
   return (
