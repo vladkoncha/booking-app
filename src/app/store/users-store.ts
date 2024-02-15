@@ -4,7 +4,7 @@ import { User } from '@/src/shared/models';
 
 export default class UsersStore {
   private users = new Map<User['email'], User>();
-  private currentUser: User | null = null;
+  private currentUserEmail: User['email'] | null = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -18,11 +18,13 @@ export default class UsersStore {
     return this.users.get(email);
   }
 
-  setCurrentUser(user: User) {
-    this.currentUser = user;
+  setCurrentUserEmail(email: User['email']) {
+    this.currentUserEmail = email;
   }
 
   getCurrentUser() {
-    return this.currentUser;
+    return this.currentUserEmail
+      ? this.users.get(this.currentUserEmail)
+      : undefined;
   }
 }

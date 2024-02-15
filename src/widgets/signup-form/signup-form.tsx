@@ -60,7 +60,7 @@ export const SignupForm = () => {
       ...values,
     };
     usersStore?.addUser(user);
-    usersStore?.setCurrentUser(user);
+    usersStore?.setCurrentUserEmail(user.email);
     notification?.success({
       message: 'Вы успешно зарегистрировались!',
       description: 'Переходим на главную страницу',
