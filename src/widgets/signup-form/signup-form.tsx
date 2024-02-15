@@ -149,7 +149,7 @@ export const SignupForm = () => {
               },
               {
                 validator: (_, value: string) =>
-                  value.length <= 60
+                  !value || value.length <= 60
                     ? Promise.resolve()
                     : Promise.reject(new Error('Слишком длинное имя')),
               },
@@ -168,7 +168,7 @@ export const SignupForm = () => {
               },
               {
                 validator: (_, value: string) =>
-                  value.length === 10
+                  !value || value.length === 10
                     ? Promise.resolve()
                     : Promise.reject(
                         new Error(
@@ -178,7 +178,7 @@ export const SignupForm = () => {
               },
               {
                 validator: (_, value: string) =>
-                  value.match(/^[0-9]*$/)
+                  !value || value.match(/^[0-9]*$/)
                     ? Promise.resolve()
                     : Promise.reject(
                         new Error(
