@@ -11,6 +11,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.3.0",
     "@ant-design/nextjs-registry": "^1.0.0",
     "antd": "^5.14.1",
     "classnames": "^2.5.1",
