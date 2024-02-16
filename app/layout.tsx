@@ -7,6 +7,7 @@ import { Roboto } from 'next/font/google';
 import { AppProvider } from '@/src/app/providers/app-provider';
 import { PxToRemProvider } from '@/src/app/providers/px-to-rem-provider';
 import { UsersProvider } from '@/src/app/store/users-provider';
+import { Header } from '@/src/widgets/header';
 
 const roboto = Roboto({
   subsets: ['cyrillic'],
@@ -31,7 +32,10 @@ export default function RootLayout({
         <PxToRemProvider>
           <AntdRegistry>
             <AppProvider>
-              <UsersProvider>{children}</UsersProvider>
+              <UsersProvider>
+                <Header />
+                {children}
+              </UsersProvider>
             </AppProvider>
           </AntdRegistry>
         </PxToRemProvider>
