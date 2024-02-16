@@ -1,9 +1,15 @@
-export interface HotelCardProps {
-  hotelId: string;
-  imageSrc: string;
-  location: string;
-  stars: 1 | 2 | 3 | 4 | 5;
-  pricePerDay: number;
-  rating: number;
+import { Hotel } from '@/src/shared/models';
+
+export type HotelCardProps = Pick<
+  Hotel,
+  | 'hotelId'
+  | 'title'
+  | 'location'
+  | 'pricePerDay'
+  | 'services'
+  | 'stars'
+  | 'rating'
+> & {
+  previewImageSrc: string;
   reviewsCount: number;
-}
+};
