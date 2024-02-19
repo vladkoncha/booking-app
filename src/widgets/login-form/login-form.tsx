@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
 
-import { UsersContext } from '@/src/app/store/users-provider';
+import { UsersContext } from '@/src/app/store/users/users-provider';
 
 import { FormModel } from './types';
 

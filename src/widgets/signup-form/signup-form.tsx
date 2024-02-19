@@ -5,18 +5,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
 
-import { UsersContext } from '@/src/app/store/users-provider';
+import { UsersContext } from '@/src/app/store/users/users-provider';
 import { User } from '@/src/shared/models';
 
 import { FormModel } from './types';
 
 const { Title } = Typography;
-
-const prefixSelector = (
-  <Form.Item name="prefix" noStyle>
-    <Input disabled style={{ width: '2.5rem' }} value="+7" />
-  </Form.Item>
-);
 
 const formItemLayout = {
   labelCol: {
@@ -188,11 +182,7 @@ export const SignupForm = () => {
               },
             ]}
           >
-            <Input
-              prefix={prefixSelector}
-              style={{ width: '100%' }}
-              maxLength={10}
-            />
+            <Input addonBefore="+7" style={{ width: '100%' }} maxLength={10} />
           </Form.Item>
 
           <Form.Item

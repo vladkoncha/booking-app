@@ -69,7 +69,9 @@ export const HotelCard = ({
               </Typography.Text>
             </Flex>
 
-            <Typography.Text>{location}</Typography.Text>
+            <Typography.Text>
+              {location.city}, {location.address}
+            </Typography.Text>
           </Flex>
           <Divider type="vertical" style={{ height: '100%' }} />
           <Flex
@@ -80,7 +82,7 @@ export const HotelCard = ({
             className={styles['book-container']}
           >
             <Typography.Text style={{ fontSize: '1.25rem' }}>
-              {pricePerDay}₽ / день
+              {pricePerDay}₽ / ночь
             </Typography.Text>
             <Button size="large" type="primary">
               Забронировать
