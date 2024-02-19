@@ -1,0 +1,35 @@
+.main-container {
+  margin: 2.5rem;
+}
+
+.image-container {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  border-radius: 0.5rem;
+}
+
+.carousel {
+  overflow: hidden;
+  max-width: 50rem;
+  border-radius: 0.5rem;
+  margin: 0 auto;
+  background-color: #e8e8e8;
+}
+
+@media (width <= 768px) {
+  .book-container {
+    width: 100%;
+  }
+
+  .main-container {
+    margin: 1rem;
+  }
+
+  .carousel {
+    overflow: hidden;
+    width: 100%;
+    max-width: fit-content;
+    background-color: #e8e8e8;
+  }
+}

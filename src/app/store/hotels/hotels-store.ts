@@ -30,4 +30,8 @@ export default class HotelsStore {
   setFilters(newFilters: HotelFilters) {
     this.filters = newFilters;
   }
+
+  getHotelById(hotelId: string) {
+    return this.hotels.find((hotel) => hotel.hotelId === hotelId);
+  }
 }
