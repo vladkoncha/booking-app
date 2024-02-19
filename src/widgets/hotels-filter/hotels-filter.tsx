@@ -34,6 +34,7 @@ export const HotelsFilter = () => {
     background: token.colorFillAlter,
     borderRadius: token.borderRadiusLG,
     padding: 12,
+    margin: 8,
     display: 'flex',
     justifyContent: 'center',
   };
