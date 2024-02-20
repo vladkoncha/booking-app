@@ -20,6 +20,7 @@ import { UsersContext } from '@/src/app/store/users/users-provider';
 import { Reservation } from '@/src/shared/models';
 
 import { FormModel, ReservationFormProps } from './types';
+import { isReservationConflicting } from './utils/is-reservation-conflicting';
 
 const { RangePicker } = DatePicker;
 type RangePickerProps = GetProps<typeof DatePicker.RangePicker>;
@@ -98,10 +99,43 @@ export const ReservationForm = ({
     return current && current < dayjs().startOf('day');
   };
 
-  const handleSubmit = (values: FormModel) => {
-    console.log(user);
+  const checkIfReservationConflicting = (
+    checkinDate: Date,
+    checkoutDate: Date
+  ) => {
+    const reservations = reservationsStore?.getReservationsByHotelId(hotelId);
+    const arrayOfRanges = reservations?.map((reservation) => [
+      reservation.checkinDate,
+      reservation.checkoutDate,
+    ]);
+    if (!arrayOfRanges) {
+      return true;
+    }
 
+    for (let i = 0; i < arrayOfRanges.length; i++) {
+      const [startDate, endDate] = arrayOfRanges[i];
+      if (
+        isReservationConflicting(checkinDate, checkoutDate, startDate, endDate)
+      ) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const handleSubmit = (values: FormModel) => {
     const resId = reservationId ?? reservationsStore?.getNextId();
+
+    const checkinDate = values.dates[0]['$d'];
+    const checkoutDate = values.dates[1]['$d'];
+
+    if (checkIfReservationConflicting(checkinDate, checkoutDate)) {
+      notification.error({
+        message: 'Ошибка бронирования',
+        description: 'Невозможно забронировать в эти даты',
+      });
+      return;
+    }
 
     if (!resId) {
       notification.error({
@@ -123,8 +157,8 @@ export const ReservationForm = ({
       reservationId: resId,
       email: user.email,
       hotelId,
-      checkinDate: values.dates[0]['$d'],
-      checkoutDate: values.dates[1]['$d'],
+      checkinDate,
+      checkoutDate,
       services: [],
       guestsCount: values.guests,
     };
@@ -159,7 +193,7 @@ export const ReservationForm = ({
             required: true,
             message: 'Пожалуйста, выберите даты бронирования',
           },
-          ({ getFieldValue }) => ({
+          () => ({
             validator(_, value) {
               if (
                 !value ||
