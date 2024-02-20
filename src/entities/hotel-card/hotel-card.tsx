@@ -25,7 +25,7 @@ export const HotelCard = ({
   services,
 }: HotelCardProps) => {
   return (
-    <Link href={`/hotel/${hotelId}`} target="_blank">
+    <Link href={`/hotel/${hotelId}`}>
       <Card
         hoverable
         className={styles['card']}

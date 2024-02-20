@@ -8,6 +8,12 @@ export default class UsersStore {
 
   constructor() {
     makeAutoObservable(this);
+    this.addUser({
+      email: 'user@example.com',
+      password: 'pass',
+      name: 'Иван',
+      phone: '9999999999',
+    });
   }
 
   addUser(newUser: User) {

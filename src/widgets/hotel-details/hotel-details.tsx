@@ -10,6 +10,7 @@ import {
   Statistic,
   Typography,
 } from 'antd';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
 
@@ -97,35 +98,42 @@ export const HotelDetails = ({ hotelId }: HotelDetailsProps) => {
             >
               {pricePerDay}₽ / ночь
             </Typography.Text>
+
             <Button size="large" type="primary">
-              Забронировать
+              <Link href={`/book/${hotelId}`}>Забронировать</Link>
             </Button>
           </Flex>
         </Flex>
       </Flex>
 
-      <Carousel dotPosition="top" className={styles['carousel']}>
-        {images.map((imageSrc) => (
-          <div key={imageSrc} className={styles['image-container']}>
-            <Image
-              preview={false}
-              src={imageSrc}
-              alt=""
-              style={{
-                width: '100%',
-                display: 'block',
-                objectFit: 'cover',
-              }}
-            />
-          </div>
-        ))}
-      </Carousel>
+      <Flex className={styles['main-container']} gap="middle" wrap="wrap">
+        <div style={{ width: '100%', maxWidth: '40rem' }}>
+          <Carousel dotPosition="top" className={styles['carousel']}>
+            {images.map((imageSrc) => (
+              <div key={imageSrc} className={styles['image-container']}>
+                <Image
+                  preview={false}
+                  src={imageSrc}
+                  alt=""
+                  style={{
+                    width: '100%',
+                    display: 'block',
+                    objectFit: 'cover',
+                  }}
+                />
+              </div>
+            ))}
+          </Carousel>
+        </div>
 
-      <Flex vertical className={styles['main-container']}>
-        <Typography.Title level={3}>Про отель</Typography.Title>
-        <Typography.Text style={{ maxWidth: '50rem', whiteSpace: 'pre-wrap' }}>
-          {description}
-        </Typography.Text>
+        <Flex vertical style={{ flex: 1 }}>
+          <Typography.Title level={3}>Про отель</Typography.Title>
+          <Typography.Text
+            style={{ maxWidth: '50rem', whiteSpace: 'pre-wrap' }}
+          >
+            {description}
+          </Typography.Text>
+        </Flex>
       </Flex>
 
       <Flex vertical className={styles['main-container']}>

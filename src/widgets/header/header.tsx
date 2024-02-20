@@ -3,7 +3,9 @@
 import { Button, Flex, Layout, Typography } from 'antd';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { CSSProperties } from 'react';
+import { CSSProperties, useContext } from 'react';
+
+import { UsersContext } from '@/src/app/store/users/users-provider';
 
 const { Header: AntHeader } = Layout;
 
@@ -20,6 +22,8 @@ const headerStyle: CSSProperties = {
 
 export const Header = () => {
   const pathname = usePathname();
+  const usersStore = useContext(UsersContext);
+  const user = usersStore?.getCurrentUser();
 
   const loginButtonProps =
     pathname === '/login'
@@ -39,7 +43,9 @@ export const Header = () => {
             </Typography.Text>
           </Link>
           <Link href="/login">
-            <Button {...loginButtonProps}>Войти</Button>
+            <Button {...loginButtonProps} disabled={!!user}>
+              Войти
+            </Button>
           </Link>
         </Flex>
       </nav>

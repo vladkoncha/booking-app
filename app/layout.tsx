@@ -5,8 +5,10 @@ import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 
 import { AppProvider } from '@/src/app/providers/app-provider';
+import { LocaleProvider } from '@/src/app/providers/locale-provider';
 import { PxToRemProvider } from '@/src/app/providers/px-to-rem-provider';
 import { HotelsProvider } from '@/src/app/store/hotels/hotels-provider';
+import { ReservationsProvider } from '@/src/app/store/reservations/reservations-provider';
 import { UsersProvider } from '@/src/app/store/users/users-provider';
 import { Header } from '@/src/widgets/header';
 
@@ -30,18 +32,22 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body className={roboto.className}>
-        <PxToRemProvider>
-          <AntdRegistry>
-            <AppProvider>
-              <UsersProvider>
-                <HotelsProvider>
-                  <Header />
-                  {children}
-                </HotelsProvider>
-              </UsersProvider>
-            </AppProvider>
-          </AntdRegistry>
-        </PxToRemProvider>
+        <LocaleProvider>
+          <PxToRemProvider>
+            <AntdRegistry>
+              <AppProvider>
+                <UsersProvider>
+                  <HotelsProvider>
+                    <ReservationsProvider>
+                      <Header />
+                      {children}
+                    </ReservationsProvider>
+                  </HotelsProvider>
+                </UsersProvider>
+              </AppProvider>
+            </AntdRegistry>
+          </PxToRemProvider>
+        </LocaleProvider>
       </body>
     </html>
   );
