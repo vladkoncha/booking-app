@@ -20,7 +20,7 @@ export const CreateReservationWidget = ({
   return (
     <Flex vertical gap="middle" align="center">
       <Flex vertical style={{ marginBlockStart: '3rem', padding: '2rem' }}>
-        <Title>{hotel?.title}</Title>
+        <Title style={{ textAlign: 'center' }}>{hotel?.title}</Title>
         <ReservationForm hotelId={hotelId} reservationId={null} />
       </Flex>
     </Flex>
