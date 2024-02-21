@@ -36,4 +36,8 @@ export default class ReservationsStore {
   getNextId() {
     return this.nextId++;
   }
+
+  deleteReservation(reservationId: Reservation['reservationId']) {
+    this.reservations.delete(reservationId);
+  }
 }

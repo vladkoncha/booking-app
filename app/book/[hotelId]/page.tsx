@@ -8,9 +8,11 @@ export default function Page({
   searchParams: { [key: string]: number | undefined };
 }) {
   return (
-    <ReservationPage
-      hotelId={params.hotelId}
-      reservationId={searchParams.reservationId ?? null}
-    />
+    <main>
+      <ReservationPage
+        hotelId={params.hotelId}
+        reservationId={searchParams.reservationId ?? null}
+      />
+    </main>
   );
 }

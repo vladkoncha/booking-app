@@ -42,7 +42,7 @@ export const Header = observer(() => {
     },
     {
       key: '2',
-      label: <Link href="/">История бронирования</Link>,
+      label: <Link href="/history">История бронирования</Link>,
     },
     {
       type: 'divider',
@@ -79,14 +79,16 @@ export const Header = observer(() => {
           </Link>
 
           {user ? (
-            <Dropdown menu={{ items }} placement="bottomRight">
-              <Button>
-                <Space>
-                  Профиль
-                  <UserOutlined />
-                </Space>
-              </Button>
-            </Dropdown>
+            <Flex align="center" justify="center">
+              <Dropdown menu={{ items }} placement="bottomRight">
+                <Button>
+                  <Space>
+                    Профиль
+                    <UserOutlined />
+                  </Space>
+                </Button>
+              </Dropdown>
+            </Flex>
           ) : (
             <Link href="/login">
               <Button
