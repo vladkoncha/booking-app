@@ -24,7 +24,7 @@ export default class UsersStore {
     return this.users.get(email);
   }
 
-  setCurrentUserEmail(email: User['email']) {
+  setCurrentUserEmail(email: User['email'] | null) {
     this.currentUserEmail = email;
   }
 
