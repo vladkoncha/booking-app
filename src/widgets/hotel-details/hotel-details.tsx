@@ -99,9 +99,17 @@ export const HotelDetails = ({ hotelId }: HotelDetailsProps) => {
               {pricePerDay}₽ / ночь
             </Typography.Text>
 
-            <Button size="large" type="primary">
-              <Link href={`/book/${hotelId}`}>Забронировать</Link>
-            </Button>
+            <Link href={`/book/${hotelId}`}>
+              <Button
+                block
+                aria-hidden
+                tabIndex={-1}
+                size="large"
+                type="primary"
+              >
+                Забронировать
+              </Button>
+            </Link>
           </Flex>
         </Flex>
       </Flex>

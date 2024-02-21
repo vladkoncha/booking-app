@@ -43,7 +43,12 @@ export const Header = () => {
             </Typography.Text>
           </Link>
           <Link href="/login">
-            <Button {...loginButtonProps} disabled={!!user}>
+            <Button
+              {...loginButtonProps}
+              aria-hidden
+              tabIndex={-1}
+              disabled={!!user}
+            >
               Войти
             </Button>
           </Link>

@@ -216,11 +216,21 @@ export const ReservationForm = ({
         rules={[
           {
             required: true,
-            message: 'Пожалуйста, укажите количеств гостей',
+            message: 'Пожалуйста, укажите количество гостей',
           },
+          () => ({
+            validator(_, value) {
+              if (!value || (value >= 1 && value <= 4)) {
+                return Promise.resolve();
+              }
+              return Promise.reject(
+                new Error('Количество гостей не должно превышать 4')
+              );
+            },
+          }),
         ]}
       >
-        <InputNumber min={1} max={4} />
+        <InputNumber min={1} />
       </Form.Item>
 
       <Form.Item {...tailFormItemLayout}>
