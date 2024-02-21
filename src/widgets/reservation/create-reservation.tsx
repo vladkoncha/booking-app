@@ -12,7 +12,6 @@ const { Title } = Typography;
 
 export const CreateReservationWidget = ({
   hotelId,
-  reservationId,
 }: CreateReservationWidgetProps) => {
   const hotelsStore = useContext(HotelsContext);
 
@@ -22,7 +21,7 @@ export const CreateReservationWidget = ({
     <Flex vertical gap="middle" align="center">
       <Flex vertical style={{ marginBlockStart: '3rem', padding: '2rem' }}>
         <Title>{hotel?.title}</Title>
-        <ReservationForm hotelId={hotelId} reservationId={reservationId} />
+        <ReservationForm hotelId={hotelId} reservationId={null} />
       </Flex>
     </Flex>
   );
