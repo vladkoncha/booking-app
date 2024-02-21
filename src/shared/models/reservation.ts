@@ -1,4 +1,4 @@
-import { Hotel, Services } from './hotel';
+import { Hotel, Service } from './hotel';
 import { User } from './user';
 
 export interface Reservation {
@@ -7,6 +7,7 @@ export interface Reservation {
   hotelId: Hotel['hotelId'];
   checkinDate: Date;
   checkoutDate: Date;
-  services: Services[];
+  services: Service['name'][];
   guestsCount: number;
+  totalPrice: number;
 }

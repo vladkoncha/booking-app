@@ -1,7 +1,7 @@
 'use client';
 
 import { DeleteOutlined, StarOutlined } from '@ant-design/icons';
-import { Button, List, Popconfirm } from 'antd';
+import { Button, Flex, List, Popconfirm, Space, Tag, Typography } from 'antd';
 import { observer } from 'mobx-react-lite';
 import Link from 'next/link';
 import { useContext } from 'react';
@@ -63,8 +63,12 @@ export const HistoryList = observer(() => {
                   {hotel?.title} {hotel?.stars} {<StarOutlined />}
                 </Link>
               }
-              description={`${reservation.checkinDate.toLocaleDateString('ru-RU')} - ${reservation.checkoutDate.toLocaleDateString('ru-RU')}, ${pluralize(reservation.guestsCount, ['гость', 'гостя', 'гостей'])}`}
+              description={`${reservation.checkinDate.toLocaleDateString('ru-RU')} - ${reservation.checkoutDate.toLocaleDateString('ru-RU')}
+Услуги: ${reservation.services.join(', ')}
+${pluralize(reservation.guestsCount, ['гость', 'гостя', 'гостей'])}`}
+              style={{ whiteSpace: 'pre-wrap' }}
             />
+            <Typography.Text strong>{reservation.totalPrice}₽</Typography.Text>
           </List.Item>
         );
       }}

@@ -1,4 +1,4 @@
-import { Hotel, Reservation, Services } from '@/src/shared/models';
+import { Hotel, Reservation, Service } from '@/src/shared/models';
 
 export interface ReservationFormProps {
   hotelId: Hotel['hotelId'];
@@ -12,5 +12,5 @@ interface RangeDate {
 export interface FormModel {
   dates: [RangeDate, RangeDate];
   guests: number;
-  // services: Services;
+  services: Service['name'][];
 }

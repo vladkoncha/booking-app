@@ -3,6 +3,7 @@
 import {
   App,
   Button,
+  Checkbox,
   DatePicker,
   Form,
   GetProps,
@@ -50,29 +51,51 @@ const tailFormItemLayout = {
   },
 };
 
+const msInDay = 1000 * 60 * 60 * 24;
+
 export const ReservationForm = ({
   reservationId,
   hotelId,
 }: ReservationFormProps) => {
   const [form] = Form.useForm<FormModel>();
-  const datesValue = Form.useWatch('dates', form);
-  const differenceMs =
-    datesValue?.[1]['$d'].getTime() - datesValue?.[0]['$d'].getTime();
-  const differenceDays = Math.ceil(differenceMs / (1000 * 60 * 60 * 24));
-
   const usersStore = useContext(UsersContext);
   const user = usersStore?.getCurrentUser();
 
   const hotelsStore = useContext(HotelsContext);
   const hotel = hotelsStore?.getHotelById(hotelId);
 
+  const reservationsStore = useContext(ReservationsContext);
+  const reservations = reservationsStore?.getReservationsByHotelId(hotelId);
+
   const { notification } = App.useApp();
   const router = useRouter();
 
-  const reservationsStore = useContext(ReservationsContext);
+  const servicesOptions = hotel?.services.map((service) => ({
+    label: `${service.name} +${service.price}₽`,
+    value: service.name,
+    disabled: !service.price,
+  }));
+  const defaultServicesOptions = hotel?.services
+    .filter((service) => !service.price)
+    .map((service) => service.name);
+
+  const datesValue = Form.useWatch('dates', form);
+  const differenceMs =
+    datesValue?.[1]['$d'].getTime() - datesValue?.[0]['$d'].getTime();
+  const differenceDays = Math.ceil(differenceMs / msInDay);
+  const servicesValue = Form.useWatch('services', form);
+
+  const totalPrice =
+    differenceDays * (hotel?.pricePerDay ?? 0) +
+    servicesValue?.reduce(
+      (acc, val) =>
+        acc +
+        differenceDays *
+          (hotel?.services.find((service) => service.name === val)?.price ?? 0),
+      0
+    );
 
   const disabledDate: RangePickerProps['disabledDate'] = (current) => {
-    const reservations = reservationsStore?.getReservationsByHotelId(hotelId);
     const arrayOfRanges = reservations?.map((reservation) => [
       reservation.checkinDate,
       reservation.checkoutDate,
@@ -103,7 +126,6 @@ export const ReservationForm = ({
     checkinDate: Date,
     checkoutDate: Date
   ) => {
-    const reservations = reservationsStore?.getReservationsByHotelId(hotelId);
     const arrayOfRanges = reservations?.map((reservation) => [
       reservation.checkinDate,
       reservation.checkoutDate,
@@ -159,8 +181,9 @@ export const ReservationForm = ({
       hotelId,
       checkinDate,
       checkoutDate,
-      services: [],
+      services: values.services,
       guestsCount: values.guests,
+      totalPrice,
     };
 
     reservationsStore?.setReservation(reservation.reservationId, reservation);
@@ -182,6 +205,7 @@ export const ReservationForm = ({
       onFinish={handleSubmit}
       initialValues={{
         guests: 1,
+        services: defaultServicesOptions,
       }}
       style={{ maxWidth: 700 }}
     >
@@ -210,7 +234,6 @@ export const ReservationForm = ({
       </Form.Item>
 
       <Form.Item
-        hasFeedback
         name="guests"
         label="Кол-во гостей"
         rules={[
@@ -233,12 +256,13 @@ export const ReservationForm = ({
         <InputNumber min={1} />
       </Form.Item>
 
+      <Form.Item name="services" label="Дополнительные услуги">
+        <Checkbox.Group options={servicesOptions} />
+      </Form.Item>
+
       <Form.Item {...tailFormItemLayout}>
         <Typography.Title level={3}>
-          Итоговая сумма:{' '}
-          {differenceDays
-            ? `${differenceDays * (hotel?.pricePerDay ?? 0)}₽`
-            : ''}
+          Итоговая сумма: {differenceDays ? `${totalPrice}₽` : ''}
         </Typography.Title>
         <Button
           style={{ width: '100%' }}

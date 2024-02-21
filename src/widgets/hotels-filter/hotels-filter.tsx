@@ -13,7 +13,7 @@ import {
 import { useContext } from 'react';
 
 import { HotelsContext } from '@/src/app/store/hotels/hotels-provider';
-import { CITIES_OPTIONS } from '@/src/shared/constants/cities-options';
+import { CITIES_OPTIONS } from '@/src/shared/constants';
 import { HotelFilters } from '@/src/shared/models';
 
 import { FormModel } from './types';

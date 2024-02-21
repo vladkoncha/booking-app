@@ -1,5 +1,14 @@
 import { StarOutlined } from '@ant-design/icons';
-import { Button, Card, Divider, Flex, Statistic, Typography } from 'antd';
+import {
+  Button,
+  Card,
+  Divider,
+  Flex,
+  Space,
+  Statistic,
+  Tag,
+  Typography,
+} from 'antd';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -72,6 +81,12 @@ export const HotelCard = ({
             <Typography.Text>
               {location.city}, {location.address}
             </Typography.Text>
+
+            <Space size={[0, 8]} wrap style={{ marginTop: '1rem' }}>
+              {services.map((service) => (
+                <Tag key={service.name}>{service.name}</Tag>
+              ))}
+            </Space>
           </Flex>
           <Divider type="vertical" style={{ height: '100%' }} />
           <Flex

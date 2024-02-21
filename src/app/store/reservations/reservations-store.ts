@@ -10,7 +10,7 @@ export default class ReservationsStore {
     makeAutoObservable(this);
   }
 
-  getReservationsByHotelId(hotelId: Hotel['hotelId']) {
+  getReservationsByHotelId(hotelId: Hotel['hotelId']): Reservation[] {
     return [...this.reservations.values()].filter(
       (reservation) => hotelId === reservation.hotelId
     );

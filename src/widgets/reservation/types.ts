@@ -1,4 +1,4 @@
-import { Hotel, Reservation } from '@/src/shared/models';
+import { Hotel } from '@/src/shared/models';
 
 export interface CreateReservationWidgetProps {
   hotelId: Hotel['hotelId'];

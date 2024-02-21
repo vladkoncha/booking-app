@@ -1,12 +1,8 @@
-import { CITIES } from '../constants';
+import { CITIES, SERVICES } from '../constants';
 
-export enum Services {
-  Wifi = 'Wifi',
-  Parking = 'Parking',
-  Gym = 'Gym',
-  AirConditioner = 'AirConditioner',
-  Breakfast = 'Breakfast',
-  Pool = 'Pool',
+export interface Service {
+  name: (typeof SERVICES)[number];
+  price: number;
 }
 
 export interface Hotel {
@@ -22,7 +18,7 @@ export interface Hotel {
   pricePerDay: number;
   rating: number;
   reviews: string[];
-  services: Services[];
+  services: Service[];
 }
 
 export interface HotelFilters {
