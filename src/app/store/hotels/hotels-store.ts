@@ -8,7 +8,7 @@ export default class HotelsStore {
     city: 'Все',
     stars: 'Все',
     minPrice: 0,
-    maxPrice: Number.MAX_SAFE_INTEGER,
+    maxPrice: 500000,
   };
   private hotels: Hotel[] = HOTELS;
 
@@ -29,6 +29,10 @@ export default class HotelsStore {
 
   setFilters(newFilters: HotelFilters) {
     this.filters = newFilters;
+  }
+
+  getFilters() {
+    return this.filters;
   }
 
   getHotelById(hotelId: string) {

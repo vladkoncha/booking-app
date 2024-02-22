@@ -10,6 +10,7 @@ import {
   Select,
   theme,
 } from 'antd';
+import { observer } from 'mobx-react-lite';
 import { useContext } from 'react';
 
 import { HotelsContext } from '@/src/app/store/hotels/hotels-provider';
@@ -24,7 +25,7 @@ const starsOptions = ['Все', 1, 2, 3, 4, 5].map((starFilter) => ({
   label: starFilter !== 'Все' ? `${starFilter}*` : starFilter,
 }));
 
-export const HotelsFilter = () => {
+export const HotelsFilter = observer(() => {
   const hotelsStore = useContext(HotelsContext);
   const { token } = theme.useToken();
   const [form] = Form.useForm<FormModel>();
@@ -57,11 +58,13 @@ export const HotelsFilter = () => {
       name="hotels-filter"
       onFinish={handleSubmit}
       style={formStyle}
-      initialValues={{
-        stars: 'Все',
-        minPrice: 0,
-        maxPrice: 500000,
-      }}
+      initialValues={
+        hotelsStore?.getFilters() ?? {
+          stars: 'Все',
+          minPrice: 0,
+          maxPrice: 500000,
+        }
+      }
     >
       <Row gutter={8}>
         <Col>
@@ -128,4 +131,4 @@ export const HotelsFilter = () => {
       </Row>
     </Form>
   );
-};
+});
