@@ -40,7 +40,6 @@ export const HotelDetails = ({ hotelId }: HotelDetailsProps) => {
     pricePerDay,
     rating,
     reviews,
-    services,
   } = hotel;
 
   const reviewsCount = reviews.length;

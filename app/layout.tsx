@@ -1,15 +1,9 @@
 import '@/src/app/styles/globals.css';
 
-import { AntdRegistry } from '@ant-design/nextjs-registry';
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 
-import { AppProvider } from '@/src/app/providers/app-provider';
-import { LocaleProvider } from '@/src/app/providers/locale-provider';
-import { PxToRemProvider } from '@/src/app/providers/px-to-rem-provider';
-import { HotelsProvider } from '@/src/app/store/hotels/hotels-provider';
-import { ReservationsProvider } from '@/src/app/store/reservations/reservations-provider';
-import { UsersProvider } from '@/src/app/store/users/users-provider';
+import { AppProvider } from '@/src/app/app-provider';
 import { Header } from '@/src/widgets/header';
 
 const roboto = Roboto({
@@ -32,22 +26,10 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body className={roboto.className}>
-        <LocaleProvider>
-          <PxToRemProvider>
-            <AntdRegistry>
-              <AppProvider>
-                <UsersProvider>
-                  <HotelsProvider>
-                    <ReservationsProvider>
-                      <Header />
-                      {children}
-                    </ReservationsProvider>
-                  </HotelsProvider>
-                </UsersProvider>
-              </AppProvider>
-            </AntdRegistry>
-          </PxToRemProvider>
-        </LocaleProvider>
+        <AppProvider>
+          <Header />
+          {children}
+        </AppProvider>
       </body>
     </html>
   );

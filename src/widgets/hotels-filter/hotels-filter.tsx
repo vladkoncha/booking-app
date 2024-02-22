@@ -33,8 +33,8 @@ export const HotelsFilter = () => {
     maxWidth: 'none',
     background: token.colorFillAlter,
     borderRadius: token.borderRadiusLG,
-    padding: 12,
-    margin: 8,
+    padding: '0.75rem',
+    margin: '0.5rem',
     display: 'flex',
     justifyContent: 'center',
   };

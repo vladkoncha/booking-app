@@ -6,33 +6,14 @@ import { useContext } from 'react';
 
 import { UsersContext } from '@/src/app/store/users/users-provider';
 
+import {
+  formItemLayout,
+  getformStyle as getFormStyle,
+  tailFormItemLayout,
+} from '../styles';
 import { FormModel } from './types';
 
 const { Title } = Typography;
-
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 8 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 16 },
-  },
-};
-
-const tailFormItemLayout = {
-  wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0,
-    },
-    sm: {
-      span: 16,
-      offset: 8,
-    },
-  },
-};
 
 export const EditPasswordForm = observer(() => {
   const { token } = theme.useToken();
@@ -59,19 +40,15 @@ export const EditPasswordForm = observer(() => {
   };
 
   return (
-    <Flex vertical gap="middle" align="center" style={{ flex: 1 }}>
+    <Flex vertical gap="middle" align="center" style={{ flexGrow: 1 }}>
       <Flex vertical style={{ width: '100%' }}>
         <Form
           {...formItemLayout}
+          labelWrap
           form={form}
           name="login"
           onFinish={handleSubmit}
-          style={{
-            maxWidth: '45rem',
-            background: token.colorFillAlter,
-            borderRadius: token.borderRadiusLG,
-            padding: '1.5rem',
-          }}
+          style={getFormStyle(token)}
           scrollToFirstError
         >
           <Title level={2} style={{ textAlign: 'center' }}>

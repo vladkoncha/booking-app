@@ -1,21 +1,14 @@
 'use client';
 
-import { UserOutlined } from '@ant-design/icons';
-import {
-  Button,
-  Dropdown,
-  Flex,
-  Layout,
-  MenuProps,
-  Space,
-  Typography,
-} from 'antd';
+import { Flex, Layout, Typography } from 'antd';
 import { observer } from 'mobx-react-lite';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { CSSProperties, useContext } from 'react';
 
 import { UsersContext } from '@/src/app/store/users/users-provider';
+
+import { LoginButton } from './ui/login-button';
+import { ProfileMenu } from './ui/profile-menu';
 
 const { Header: AntHeader } = Layout;
 
@@ -31,75 +24,25 @@ const headerStyle: CSSProperties = {
 };
 
 export const Header = observer(() => {
-  const pathname = usePathname();
   const usersStore = useContext(UsersContext);
   const user = usersStore?.getCurrentUser();
-
-  const items: MenuProps['items'] = [
-    {
-      key: '1',
-      label: <Link href="/profile">Настройки</Link>,
-    },
-    {
-      key: '2',
-      label: <Link href="/history">История бронирования</Link>,
-    },
-    {
-      type: 'divider',
-    },
-    {
-      key: '3',
-      label: (
-        <Link
-          href="/login"
-          onClick={() => usersStore?.setCurrentUserEmail(null)}
-        >
-          Выйти
-        </Link>
-      ),
-    },
-  ];
-
-  const loginButtonProps =
-    pathname === '/login'
-      ? ({
-          type: 'dashed',
-          disabled: true,
-        } as const)
-      : {};
 
   return (
     <AntHeader style={headerStyle}>
       <nav>
         <Flex justify="space-between" gap="large">
           <Link href="/">
-            <Typography.Text strong underline style={{ fontSize: 18 }}>
+            <Typography.Text strong underline style={{ fontSize: '1.25rem' }}>
               ТревелБук
             </Typography.Text>
           </Link>
 
           {user ? (
-            <Flex align="center" justify="center">
-              <Dropdown menu={{ items }} placement="bottomRight">
-                <Button>
-                  <Space>
-                    Профиль
-                    <UserOutlined />
-                  </Space>
-                </Button>
-              </Dropdown>
-            </Flex>
+            <ProfileMenu
+              onLogout={() => usersStore?.setCurrentUserEmail(null)}
+            />
           ) : (
-            <Link href="/login">
-              <Button
-                {...loginButtonProps}
-                aria-hidden
-                tabIndex={-1}
-                disabled={!!user}
-              >
-                Войти
-              </Button>
-            </Link>
+            <LoginButton />
           )}
         </Flex>
       </nav>

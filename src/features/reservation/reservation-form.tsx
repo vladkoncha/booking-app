@@ -10,22 +10,21 @@ import {
   InputNumber,
   Typography,
 } from 'antd';
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
 
 import { HotelsContext } from '@/src/app/store/hotels/hotels-provider';
 import { ReservationsContext } from '@/src/app/store/reservations/reservations-provider';
 import { UsersContext } from '@/src/app/store/users/users-provider';
+import { msInDay } from '@/src/shared/constants';
 import { Reservation } from '@/src/shared/models';
 
 import { FormModel, ReservationFormProps } from './types';
+import { getDisabledDate } from './utils/get-disabled-date';
 import { isReservationConflicting } from './utils/is-reservation-conflicting';
 
 const { RangePicker } = DatePicker;
 type RangePickerProps = GetProps<typeof DatePicker.RangePicker>;
-dayjs.extend(customParseFormat);
 
 const formItemLayout = {
   labelCol: {
@@ -51,8 +50,6 @@ const tailFormItemLayout = {
   },
 };
 
-const msInDay = 1000 * 60 * 60 * 24;
-
 export const ReservationForm = ({
   reservationId,
   hotelId,
@@ -75,7 +72,7 @@ export const ReservationForm = ({
     value: service.name,
     disabled: !service.price,
   }));
-  const defaultServicesOptions = hotel?.services
+  const defaultServicesValue = hotel?.services
     .filter((service) => !service.price)
     .map((service) => service.name);
 
@@ -95,32 +92,9 @@ export const ReservationForm = ({
       0
     );
 
-  const disabledDate: RangePickerProps['disabledDate'] = (current) => {
-    const arrayOfRanges = reservations?.map((reservation) => [
-      reservation.checkinDate,
-      reservation.checkoutDate,
-    ]);
-
-    if (!arrayOfRanges) {
-      return current && current < dayjs().startOf('day');
-    }
-
-    for (let i = 0; i < arrayOfRanges.length; i++) {
-      const [startDate, endDate] = arrayOfRanges[i];
-      const rangeStartDate = dayjs(startDate);
-      const rangeEndDate = dayjs(endDate);
-
-      if (
-        (current.isSame(rangeStartDate, 'day') ||
-          current.isAfter(rangeStartDate, 'day')) &&
-        (current.isSame(rangeEndDate, 'day') ||
-          current.isBefore(rangeEndDate, 'day'))
-      ) {
-        return true;
-      }
-    }
-    return current && current < dayjs().startOf('day');
-  };
+  const disabledDate: RangePickerProps['disabledDate'] = getDisabledDate(
+    reservations ?? []
+  );
 
   const checkIfReservationConflicting = (
     checkinDate: Date,
@@ -205,7 +179,7 @@ export const ReservationForm = ({
       onFinish={handleSubmit}
       initialValues={{
         guests: 1,
-        services: defaultServicesOptions,
+        services: defaultServicesValue,
       }}
       style={{ maxWidth: 700 }}
     >

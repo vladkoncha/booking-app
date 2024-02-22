@@ -5,8 +5,6 @@ import { CreateReservationWidget } from '@/src/widgets/reservation';
 
 import { ReservationPageProps } from './types';
 
-export const ReservationPage = withAuth(
-  ({ hotelId, reservationId }: ReservationPageProps) => {
-    return <CreateReservationWidget hotelId={hotelId} />;
-  }
-);
+export const ReservationPage = withAuth(({ hotelId }: ReservationPageProps) => {
+  return <CreateReservationWidget hotelId={hotelId} />;
+});

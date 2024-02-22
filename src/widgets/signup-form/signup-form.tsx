@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
 
 import { UsersContext } from '@/src/app/store/users/users-provider';
+import { NameInput } from '@/src/features/name-input';
+import { PhoneInput } from '@/src/features/phone-input';
 import { User } from '@/src/shared/models';
 
 import { FormModel } from './types';
@@ -70,9 +72,6 @@ export const SignupForm = () => {
           {...formItemLayout}
           name="signup"
           onFinish={handleSubmit}
-          initialValues={{
-            prefix: '+7',
-          }}
           style={{ maxWidth: 600 }}
           scrollToFirstError
         >
@@ -132,58 +131,9 @@ export const SignupForm = () => {
             <Input.Password />
           </Form.Item>
 
-          <Form.Item
-            name="name"
-            label="Имя"
-            rules={[
-              {
-                required: true,
-                message: 'Пожалуйста, введите ваше имя',
-                whitespace: true,
-              },
-              {
-                validator: (_, value: string) =>
-                  !value || value.length <= 60
-                    ? Promise.resolve()
-                    : Promise.reject(new Error('Слишком длинное имя')),
-              },
-            ]}
-          >
-            <Input maxLength={60} />
-          </Form.Item>
+          <NameInput />
 
-          <Form.Item
-            name="phone"
-            label="Номер телефона"
-            rules={[
-              {
-                required: true,
-                message: 'Пожалуйста, введите ваш номер телефона',
-              },
-              {
-                validator: (_, value: string) =>
-                  !value || value.length === 10
-                    ? Promise.resolve()
-                    : Promise.reject(
-                        new Error(
-                          'Некорректная длина, проверьте номер телефона'
-                        )
-                      ),
-              },
-              {
-                validator: (_, value: string) =>
-                  !value || value.match(/^[0-9]*$/)
-                    ? Promise.resolve()
-                    : Promise.reject(
-                        new Error(
-                          'Номер телефона должен содержать только цифры'
-                        )
-                      ),
-              },
-            ]}
-          >
-            <Input addonBefore="+7" style={{ width: '100%' }} maxLength={10} />
-          </Form.Item>
+          <PhoneInput />
 
           <Form.Item
             name="agreement"
